@@ -21,6 +21,7 @@ public class Reservation {
         private Long id;
 
         private LocalDate date;
+        private String teste;
         private LocalTime time;
         private String status;
         @ManyToOne
