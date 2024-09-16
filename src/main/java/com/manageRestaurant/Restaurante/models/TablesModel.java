@@ -6,24 +6,19 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.*;
-import org.antlr.v4.runtime.misc.NotNull;
 
 @Data
-@Entity
 @Getter
 @Setter
-@AllArgsConstructor
+@Entity(name = "tables")
 @NoArgsConstructor
-public class Customers {
+@AllArgsConstructor
+public class TablesModel {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotNull
-    private String name;
-    @NotNull
-    private String cpf;
-    private String phone;
-    private String email;
-
+    private Integer number;
+    private Integer capacity;
+    private String observation;
 }

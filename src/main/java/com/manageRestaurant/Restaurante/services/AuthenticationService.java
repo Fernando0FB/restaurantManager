@@ -1,6 +1,6 @@
 package com.manageRestaurant.Restaurante.services;
 
-import com.manageRestaurant.Restaurante.models.Users;
+import com.manageRestaurant.Restaurante.models.UsersModel;
 import com.manageRestaurant.Restaurante.repositories.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,10 +30,10 @@ public class AuthenticationService {
         String username = tokenParts[0];
         String password = tokenParts[1];
 
-        Optional<Users> userExists = usersRepository.findByUsername(username);
+        Optional<UsersModel> userExists = usersRepository.findByUsername(username);
 
-        if(userExists.isPresent()) {
-            Users user = userExists.get();
+        if (userExists.isPresent()) {
+            UsersModel user = userExists.get();
             return user.getPassword().equals(password);
         }
 
