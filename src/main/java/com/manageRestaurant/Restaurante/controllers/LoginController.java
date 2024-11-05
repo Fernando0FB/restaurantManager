@@ -1,5 +1,8 @@
 package com.manageRestaurant.Restaurante.controllers;
 
+import com.manageRestaurant.Restaurante.DTO.LoginRequestDTO;
+import com.manageRestaurant.Restaurante.DTO.ResponseDTO;
+import com.manageRestaurant.Restaurante.DTO.validationDTO;
 import com.manageRestaurant.Restaurante.services.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,34 +11,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @RestController
 public class LoginController {
     @Autowired
     private UsersService usersService;
 
     @PostMapping("/api/login")
-    public ResponseEntity<Map<String, String>> login(
-            @RequestBody Map<String, String> loginRequest
-    ) {
-        Map<String, String> response = new HashMap<>();
-        String username = loginRequest.get("username");
-        String password = loginRequest.get("password");
-
-        Map<Boolean, String> authenticated = usersService.authenticateUserCredentials(username, password);
-
-        Boolean isValid = authenticated.keySet().iterator().next();
-        String message = authenticated.get(isValid);
-
-        if (isValid) {
-            response.put("message", "Login realizado com sucesso!");
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        } else {
-            response.put("message", message);
-            return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
-        }
+    public ResponseEntity<ResponseDTO> login(@RequestBody LoginRequestDTO loginRequest) {
+        validationDTO validationResponse = usersService.authenticateUserCredentials(loginRequest.getUsername(), loginRequest.getPassword());
+        HttpStatus status = validationResponse.isSuccess() ? HttpStatus.OK : HttpStatus.UNAUTHORIZED;
+        ResponseDTO response = new ResponseDTO(validationResponse.getMessage());
+        return new ResponseEntity<>(response, status);
     }
 
 }

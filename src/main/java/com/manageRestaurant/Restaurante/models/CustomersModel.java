@@ -7,8 +7,6 @@ import org.antlr.v4.runtime.misc.NotNull;
 
 @Data
 @Entity(name = "Customers")
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class CustomersModel {

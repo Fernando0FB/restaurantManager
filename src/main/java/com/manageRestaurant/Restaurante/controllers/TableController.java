@@ -1,10 +1,9 @@
 package com.manageRestaurant.Restaurante.controllers;
 
 import com.manageRestaurant.Restaurante.models.TablesModel;
-import com.manageRestaurant.Restaurante.models.UsersModel;
+import com.manageRestaurant.Restaurante.DTO.validationDTO;
 import com.manageRestaurant.Restaurante.repositories.TablesRepository;
-import com.manageRestaurant.Restaurante.services.TableService;
-import org.hibernate.query.NativeQuery;
+import com.manageRestaurant.Restaurante.services.TablesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 public class TableController {
@@ -22,7 +20,7 @@ public class TableController {
     private TablesRepository tablesRepository;
 
     @Autowired
-    private TableService tableService;
+    private TablesService tableService;
 
     @GetMapping("/api/all-tables")
     public ResponseEntity<List<TablesModel>> allTables() {
@@ -31,12 +29,9 @@ public class TableController {
 
     @PostMapping("/api/register-table")
     public ResponseEntity<String> createTable(@RequestBody TablesModel tablesModel) {
-        Map<Boolean, String> created = tableService.createTable(tablesModel);
-        Boolean isValid = created.keySet().iterator().next();
-        String message = created.get(isValid);
-        HttpStatus statusReq = isValid ? HttpStatus.CREATED : HttpStatus.BAD_REQUEST;
-        String responseMessage = isValid ? "Mesa criada com sucesso!" : message;
-        return new ResponseEntity<>(responseMessage, statusReq);
+        validationDTO validationResponse = tableService.createTable(tablesModel);
+        HttpStatus statusReq = validationResponse.isSuccess() ? HttpStatus.CREATED : HttpStatus.BAD_REQUEST;
+        return new ResponseEntity<>(validationResponse.getMessage(), statusReq);
     }
 
 }

@@ -1,7 +1,7 @@
 package com.manageRestaurant.Restaurante.controllers;
 
-import com.manageRestaurant.Restaurante.models.TablesModel;
 import com.manageRestaurant.Restaurante.models.UsersModel;
+import com.manageRestaurant.Restaurante.DTO.validationDTO;
 import com.manageRestaurant.Restaurante.repositories.UsersRepository;
 import com.manageRestaurant.Restaurante.services.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController("/api")
-public class UsuarioController {
+public class UsersController {
     @Autowired
     private UsersRepository usersRepository;
 
@@ -25,12 +24,9 @@ public class UsuarioController {
 
     @PostMapping("/registerUser")
     public ResponseEntity<String> createUser(@RequestBody UsersModel user) {
-        Map<Boolean, String> created = usersService.createUser(user);
-        Boolean isValid = created.keySet().iterator().next();
-        String message = created.get(isValid);
-        HttpStatus statusReq = isValid ? HttpStatus.CREATED : HttpStatus.BAD_REQUEST;
-        String responseMessage = isValid ? "Usuário criado com sucesso!" : message;
-        return new ResponseEntity<>(responseMessage, statusReq);
+        validationDTO validationResponse = usersService.createUser(user);
+        HttpStatus statusReq = validationResponse.isSuccess() ? HttpStatus.CREATED : HttpStatus.BAD_REQUEST;
+        return new ResponseEntity<>(validationResponse.getMessage(), statusReq);
     }
 
     @GetMapping("/api/all-users")
