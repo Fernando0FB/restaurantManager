@@ -31,4 +31,5 @@ public class ReservationModel {
     @JoinColumn(name = "tables_id")
     private TablesModel table;
 
+
 }

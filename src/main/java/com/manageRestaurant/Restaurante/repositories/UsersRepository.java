@@ -9,6 +9,4 @@ public interface UsersRepository extends JpaRepository<UsersModel, Long> {
     Optional<UsersModel> findByUsername(String username);
 
     Optional<UsersModel> findByCpf(String cpf);
-
-    Optional<UsersModel> findByUsernameOrCpf(String cpf, String username);
 }

@@ -32,9 +32,5 @@ public class TestController {
         }
     }
 
-    @GetMapping("/api/all-tables")
-    //public List<Tables> allTables (@RequestHeader (value = "Authorization") String codedAuthorization){
-    public ResponseEntity<List<TablesModel>> allTables() {
-        return ResponseEntity.ok(tablesRepository.findAll());
-    }
+
 }
