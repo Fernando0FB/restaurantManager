@@ -1,7 +1,7 @@
 package com.manageRestaurant.Restaurante.controllers;
 
 import com.manageRestaurant.Restaurante.models.UsersModel;
-import com.manageRestaurant.Restaurante.DTO.validationDTO;
+import com.manageRestaurant.Restaurante.DTO.ValidationDTO;
 import com.manageRestaurant.Restaurante.repositories.UsersRepository;
 import com.manageRestaurant.Restaurante.services.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class UsersController {
 
     @PostMapping("/registerUser")
     public ResponseEntity<String> createUser(@RequestBody UsersModel user) {
-        validationDTO validationResponse = usersService.createUser(user);
+        ValidationDTO validationResponse = usersService.createUser(user);
         HttpStatus statusReq = validationResponse.isSuccess() ? HttpStatus.CREATED : HttpStatus.BAD_REQUEST;
         return new ResponseEntity<>(validationResponse.getMessage(), statusReq);
     }

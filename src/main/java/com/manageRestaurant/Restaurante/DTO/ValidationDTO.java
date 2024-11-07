@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class validationDTO {
+public class ValidationDTO {
     private boolean success;
     private String message;
 }

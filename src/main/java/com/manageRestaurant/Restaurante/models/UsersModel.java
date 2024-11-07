@@ -19,5 +19,9 @@ public class UsersModel {
     private String cpf;
     @Column(unique = true)
     private String username;
-    private String password; // Armazene de forma segura (criptografada)
+    private String password;
+
+    @ManyToOne
+    @JoinColumn(name = "entity_id")
+    private EntityModel entity;
 }

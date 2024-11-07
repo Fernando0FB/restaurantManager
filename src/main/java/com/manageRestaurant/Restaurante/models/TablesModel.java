@@ -1,10 +1,7 @@
 package com.manageRestaurant.Restaurante.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Data
@@ -21,4 +18,8 @@ public class TablesModel {
     private Integer number;
     private Integer capacity;
     private String observation;
+
+    @ManyToOne
+    @JoinColumn(name = "entity_id")
+    private EntityModel entity;
 }
