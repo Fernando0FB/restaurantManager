@@ -1,9 +1,9 @@
 package com.manageRestaurant.Restaurante.services;
 
+import com.manageRestaurant.Restaurante.DTO.ValidationDTO;
 import com.manageRestaurant.Restaurante.enums.LoginStatus;
 import com.manageRestaurant.Restaurante.enums.UsersStatus;
 import com.manageRestaurant.Restaurante.models.UsersModel;
-import com.manageRestaurant.Restaurante.DTO.validationDTO;
 import com.manageRestaurant.Restaurante.repositories.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
