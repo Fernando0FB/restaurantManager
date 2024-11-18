@@ -2,7 +2,7 @@ package com.manageRestaurant.Restaurante.controllers;
 
 import com.manageRestaurant.Restaurante.DTO.LoginRequestDTO;
 import com.manageRestaurant.Restaurante.DTO.ResponseDTO;
-import com.manageRestaurant.Restaurante.DTO.validationDTO;
+import com.manageRestaurant.Restaurante.DTO.ValidationDTO;
 import com.manageRestaurant.Restaurante.services.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,7 +18,7 @@ public class LoginController {
 
     @PostMapping("/api/login")
     public ResponseEntity<ResponseDTO> login(@RequestBody LoginRequestDTO loginRequest) {
-        validationDTO validationResponse = usersService.authenticateUserCredentials(loginRequest.getUsername(), loginRequest.getPassword());
+        ValidationDTO validationResponse = usersService.authenticateUserCredentials(loginRequest.getUsername(), loginRequest.getPassword());
         HttpStatus status = validationResponse.isSuccess() ? HttpStatus.OK : HttpStatus.UNAUTHORIZED;
         ResponseDTO response = new ResponseDTO(validationResponse.getMessage());
         return new ResponseEntity<>(response, status);

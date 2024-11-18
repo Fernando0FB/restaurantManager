@@ -20,16 +20,19 @@ public class ReservationModel {
     private Long id;
 
     private LocalDate date;
-    private String teste;
-    private LocalTime time;
+    private LocalTime initialTime;
+    private LocalTime finalTime;
     private String status;
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private CustomersModel customer;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tables_id")
     private TablesModel table;
 
+    @ManyToOne
+    @JoinColumn(name = "entity_id")
+    private EntityModel entity;
 
 }

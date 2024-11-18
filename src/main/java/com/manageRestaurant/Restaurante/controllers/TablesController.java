@@ -1,7 +1,7 @@
 package com.manageRestaurant.Restaurante.controllers;
 
 import com.manageRestaurant.Restaurante.models.TablesModel;
-import com.manageRestaurant.Restaurante.DTO.validationDTO;
+import com.manageRestaurant.Restaurante.DTO.ValidationDTO;
 import com.manageRestaurant.Restaurante.repositories.TablesRepository;
 import com.manageRestaurant.Restaurante.services.TablesService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-public class TableController {
+public class TablesController {
     @Autowired
     private TablesRepository tablesRepository;
 
@@ -29,7 +29,7 @@ public class TableController {
 
     @PostMapping("/api/register-table")
     public ResponseEntity<String> createTable(@RequestBody TablesModel tablesModel) {
-        validationDTO validationResponse = tableService.createTable(tablesModel);
+        ValidationDTO validationResponse = tableService.createTable(tablesModel);
         HttpStatus statusReq = validationResponse.isSuccess() ? HttpStatus.CREATED : HttpStatus.BAD_REQUEST;
         return new ResponseEntity<>(validationResponse.getMessage(), statusReq);
     }

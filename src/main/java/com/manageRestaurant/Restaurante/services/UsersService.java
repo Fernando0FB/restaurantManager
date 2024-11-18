@@ -19,36 +19,36 @@ public class UsersService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public validationDTO createUser(UsersModel user) {
-        validationDTO validationResponse = checkIfUserAlreadyExist(user);
+    public ValidationDTO createUser(UsersModel user) {
+        ValidationDTO validationResponse = checkIfUserAlreadyExist(user);
         if (!validationResponse.isSuccess()) {
             return validationResponse;
         }
         user.setUsername(user.getUsername().toLowerCase());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         usersRepository.save(user);
-        return new validationDTO(true, UsersStatus.SUCCESS.getMessage());
+        return new ValidationDTO(true, UsersStatus.SUCCESS.getMessage());
     }
 
-    public validationDTO authenticateUserCredentials(String username, String password) {
+    public ValidationDTO authenticateUserCredentials(String username, String password) {
         Optional<UsersModel> userInstance = usersRepository.findByUsername(username.toLowerCase());
         if (userInstance.isPresent()) {
             UsersModel findedUser = userInstance.get();
             Boolean isValid = passwordEncoder.matches(password, findedUser.getPassword());
             String message = isValid ? LoginStatus.IS_VALID.getMessage() : LoginStatus.INVALID_PASSWORD.getMessage();
-            return new validationDTO(isValid, message);
+            return new ValidationDTO(isValid, message);
         }
-        return new validationDTO(false, LoginStatus.USER_NOT_FOUND.getMessage());
+        return new ValidationDTO(false, LoginStatus.USER_NOT_FOUND.getMessage());
     }
 
-    public validationDTO checkIfUserAlreadyExist(UsersModel user) {
+    public ValidationDTO checkIfUserAlreadyExist(UsersModel user) {
         if (usersRepository.findByUsername(user.getUsername().toLowerCase()).isPresent()) {
-            return new validationDTO(false, UsersStatus.USERNAME_ALREADY_EXISTS.getMessage());
+            return new ValidationDTO(false, UsersStatus.USERNAME_ALREADY_EXISTS.getMessage());
         }
         if (usersRepository.findByCpf(user.getCpf().toLowerCase()).isPresent()) {
-            return new validationDTO(false, UsersStatus.CPF_ALREADY_EXISTS.getMessage());
+            return new ValidationDTO(false, UsersStatus.CPF_ALREADY_EXISTS.getMessage());
         }
-        return new validationDTO(true, "");
+        return new ValidationDTO(true, "");
     }
 
 }
