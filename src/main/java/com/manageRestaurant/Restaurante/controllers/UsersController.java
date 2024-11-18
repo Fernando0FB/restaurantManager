@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController("/api")
+@RestController()
 public class UsersController {
     @Autowired
     private UsersRepository usersRepository;
@@ -22,7 +22,7 @@ public class UsersController {
     @Autowired
     private UsersService usersService;
 
-    @PostMapping("/registerUser")
+    @PostMapping("/api/register-user")
     public ResponseEntity<String> createUser(@RequestBody UsersModel user) {
         validationDTO validationResponse = usersService.createUser(user);
         HttpStatus statusReq = validationResponse.isSuccess() ? HttpStatus.CREATED : HttpStatus.BAD_REQUEST;
@@ -30,7 +30,7 @@ public class UsersController {
     }
 
     @GetMapping("/api/all-users")
-    public ResponseEntity<List<UsersModel>> allTables() {
+    public ResponseEntity<List<UsersModel>> allUsers() {
         return ResponseEntity.ok(usersRepository.findAll());
     }
 

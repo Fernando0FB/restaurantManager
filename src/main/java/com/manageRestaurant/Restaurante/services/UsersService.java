@@ -31,7 +31,7 @@ public class UsersService {
     }
 
     public validationDTO authenticateUserCredentials(String username, String password) {
-        Optional<UsersModel> userInstance = usersRepository.findByUsername(username);
+        Optional<UsersModel> userInstance = usersRepository.findByUsername(username.toLowerCase());
         if (userInstance.isPresent()) {
             UsersModel findedUser = userInstance.get();
             Boolean isValid = passwordEncoder.matches(password, findedUser.getPassword());
