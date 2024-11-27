@@ -2,12 +2,10 @@ package com.manageRestaurant.Restaurante.repositories;
 
 import com.manageRestaurant.Restaurante.models.ReservationModel;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-import java.time.LocalDate;
-import java.util.List;
+import java.util.Optional;
 
-public interface ReservationsRepository extends JpaRepository<ReservationModel, Long> {
-    public List<ReservationModel> findByDate(LocalDate date);
-
-
+public interface ReservationsRepository extends JpaRepository<ReservationModel, Long>, JpaSpecificationExecutor<ReservationModel> {
+    Optional<ReservationModel> findByDeletedIsFalseAndId(Long id);
 }

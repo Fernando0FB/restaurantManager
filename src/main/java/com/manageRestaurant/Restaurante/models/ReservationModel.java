@@ -1,8 +1,10 @@
 package com.manageRestaurant.Restaurante.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.SQLDelete;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -13,6 +15,8 @@ import java.time.LocalTime;
 @Entity(name = "reservation")
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "reservation")
+@SQLDelete(sql = "UPDATE reservation SET deleted = true WHERE id=?")
 public class ReservationModel {
     @Id
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
@@ -23,16 +27,16 @@ public class ReservationModel {
     private LocalTime initialTime;
     private LocalTime finalTime;
     private String status;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     @JoinColumn(name = "customer_id")
     private CustomersModel customer;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     @JoinColumn(name = "tables_id")
     private TablesModel table;
 
-    @ManyToOne
-    @JoinColumn(name = "entity_id")
-    private EntityModel entity;
+    private Boolean deleted = Boolean.FALSE;
 
 }

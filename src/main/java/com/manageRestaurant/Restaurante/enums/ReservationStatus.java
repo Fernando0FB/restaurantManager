@@ -5,9 +5,11 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum TablesStatus {
-    TABLE_ALREADY_EXISTS("Já existe uma mesa cadastrada com esse nome!"),
-    SUCCESS("Mesa criada com sucesso!");
+public enum ReservationStatus {
+    PENDING("Pendente"),
+    CONFIRMED("Confirmada"),
+    CANCELLED("Cancelada"),
+    COMPLETED("Concluída");
 
     private final String message;
 }
